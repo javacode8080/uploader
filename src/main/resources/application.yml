@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: deploy_user
+    password: Abc123++
+    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: org.postgresql.Driver
+  servlet:
+    multipart:
+      max-file-size: 10000Mb
+      max-request-size: 100000Mb
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.company.neutralizationtools.model
+upload:
+  path: ./upload/
