@@ -56,11 +56,39 @@
         </dependency>
     </dependencies>
 
+<!--    插件引入构建前端文件，执行命令mvn clean package -Dmaven.test.skip=true 进行打包操作-->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--删除后端static目录下原有的文件[需要执行maven clean]-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <!--当配置true时,只清理filesets里的文件,构建目录中（target）的文件不被清理.默认是flase.-->
+                    <excludeDefaultDirectories>false</excludeDefaultDirectories>
+                    <filesets>
+                        <fileset>
+                            <!--要清理的目录位置-->
+                            <directory>${basedir}/src/main/resources/static</directory>
+                            <!--是否跟随符号链接,默认false-->
+                            <followSymlinks>false</followSymlinks>
+                            <!--默认有些文件是不会被清理的,如果设置成false,则全部按照自定义的来处理-->
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                            <!--对这些文件进行清理-->
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <!--对这些文件不清理(可进行多文件匹配，例如index*，表明匹配文件名中带有index的都保留)，本项目中并未使用需要排除的文件-->
+                            <excludes>
+                                <exclude>xxx*</exclude>
+                            </excludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
             <!--前端打包配置：install+build-->
             <plugin>
